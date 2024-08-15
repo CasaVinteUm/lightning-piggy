@@ -30,12 +30,12 @@ void wifiEventCallback(WiFiEvent_t eventid, WiFiEventInfo_t info) {
   // Full list at ~/.arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32/esp_event_legacy.h
   if(eventid == ARDUINO_EVENT_WIFI_STA_DISCONNECTED) {
     uint8_t reason = info.wifi_sta_disconnected.reason;
-    details = "Wifi error " + String(reason) + ": " + String(reason2str(reason));
+    details = "Erro WiFi " + String(reason) + ": " + String(reason2str(reason));
 
     if (reason == WIFI_REASON_MIC_FAILURE || reason == WIFI_REASON_AUTH_FAIL || reason == WIFI_REASON_AUTH_EXPIRE || reason == WIFI_REASON_ASSOC_EXPIRE || reason == WIFI_REASON_4WAY_HANDSHAKE_TIMEOUT) {
-      details += ". Wrong password? Max. WPA2 security.";
+      details += ". Senha errada? Limite: WPA2.";
     } else if (reason == WIFI_REASON_NO_AP_FOUND) {
-      details += ". Wrong SSID? Only 2.4Ghz supported.";
+      details += ". Rede errada? Só 2.4GHz.";
     }
 
     if (reason != WIFI_REASON_ASSOC_LEAVE) { // ignore intentional disconnections (such as before deepsleep)

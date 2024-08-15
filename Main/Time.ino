@@ -41,6 +41,8 @@ String getDayOfWeekString(int dayOfWeek) {
     return nlWeekdays[dayOfWeek];
   } else if (strncmp(localeSetting,"es",2) == 0) {
     return esWeekdays[dayOfWeek];
+  } else if (strncmp(localeSetting,"pt",2) == 0) {
+    return ptWeekdays[dayOfWeek];
   } else {
      return enWeekdays[dayOfWeek];
   }
@@ -70,7 +72,7 @@ void setTimeZone(const char* city) {
 String getLocalTimeAsString() {
     struct tm timeinfo;
     if (!getLocalTime(&timeinfo)) {
-        return "Failed to obtain time";
+        return "sem hora";
     }
     char timeString[64];  // Buffer to hold the formatted time string
     strftime(timeString, sizeof(timeString), "%H:%M", &timeinfo);

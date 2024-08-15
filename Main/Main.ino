@@ -120,15 +120,15 @@ void loop() {
       if (wifiConnected()) {
         // Show IP address
         int wifiStrengthPercent = strengthPercent(getStrength(5));
-        updateStatusBar("Strength: " + String(wifiStrengthPercent) + "% IP: " + ipToString(WiFi.localIP())); delay(500);
-        updateStatusBar("Synchronizing clock with pool.ntp.org");
+        updateStatusBar("Wifi:" + String(wifiStrengthPercent) + "%, IP: " + ipToString(WiFi.localIP())); delay(500);
+        updateStatusBar("Ajustando a hora (NTP)...");
         setup_time();
         if (getConfigValueAsBool(alwaysRunWebserver)) {
-          updateStatusBar("Starting webserver...");
+          updateStatusBar("Ligando site de config...");
           start_webserver();
         }
         if (walletToUse() == WALLET_NWC) setup_nwc();
-        updateStatusBar("Fetching wallet info...");
+        updateStatusBar("Buscando carteira...");
         piggyMode = PIGGYMODE_STARTED_STA;
       } else {
         piggyMode = PIGGYMODE_FAILED_STA;
@@ -175,12 +175,12 @@ void loop() {
       checkShowUpdateAvailable();
       piggyMode = PIGGYMODE_STARTED_STA; // go back to idling on websocket
   } else if (piggyMode == PIGGYMODE_FAILED_STA) {
-    displayFit("I've been trying to connect to the wifi unsuccessfully for " + String(WIFI_CONNECT_TIMEOUT_SECONDS) + "s. Going to sleep for 6 hours. Reminder: You can trigger Configuration Mode by long-pressing the General Purpose (IO39) button.", 0, 40+5, displayWidth(), displayHeight()-smallestFontHeight-5, 1, false, false, true);
+    displayFit("WiFi falhou. Dormindo 6h. Aperte o botão 3s p/ configurar.", 0, 40+5, displayWidth(), displayHeight()-smallestFontHeight-5, 1, false, false, true);
     hibernate(DEFAULT_SLEEP_DURATION_SECONDS);
   } else if (piggyMode == PIGGYMODE_STARTING_AP) {
     if (apstart_time == 0) {
       stop_webserver();
-      displayFit("Starting wireless Access Point for configuration. This can take 20 seconds, please wait...", 0, 0, displayWidth(), displayHeight(), MAX_FONT);
+      displayFit("Ligando modo config. Aguarde 20s...", 0, 0, displayWidth(), displayHeight(), MAX_FONT);
       apstart_time = millis();
       wifi_init_softap();
     } else if (millis() - apstart_time < 17 * 1000) {
@@ -191,7 +191,7 @@ void loop() {
       start_webserver();
       apstart_time = 0; // mark server as started
       piggyMode = PIGGYMODE_STARTED_AP;
-      displayFit("Wireless Access Point started. Connect to the wifi called '" + String(ACCESS_POINT_SSID) + "' and open " + configURL + " in your webbrowser with username: " + String(WEBCONFIG_USERNAME) + " and password: " + String(WEBCONFIG_PASSWORD), 0, 0, displayWidth(), displayHeight(), MAX_FONT);
+      displayFit("WiFi '" + String(ACCESS_POINT_SSID) + "' ligado! No celular entre nela e abra " + configURL + " (usuário " + String(WEBCONFIG_USERNAME) + ", senha " + String(WEBCONFIG_PASSWORD) + ")", 0, 0, displayWidth(), displayHeight(), MAX_FONT);
     }
   } else if (piggyMode == PIGGYMODE_STARTED_AP) {
     loop_dns();

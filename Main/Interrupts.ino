@@ -60,10 +60,10 @@ void loop_interrupts() {
 
   if (lastTilted != NOT_SPECIFIED && piggyMode == PIGGYMODE_STARTED_STA) { // only handle tilts if there has been any, and if we're in regular idle mode, waiting for payments to come in
     if ((millis() - lastTilted) < minTimeBetweenTilts) { // was the tilt recent?
-      displayFit("I'm tilted!", 0, 0, displayWidth(), displayHeight(), 6);
+      displayFit("De lado!", 0, 0, displayWidth(), displayHeight(), 6);
       tiltMessageShown = true;
     } else if (tiltMessageShown) { // else not recent but message still shown?
-      displayFit("Back up!", 0, 0, displayWidth(), displayHeight(), 6);
+      displayFit("De pé!", 0, 0, displayWidth(), displayHeight(), 6);
       tiltMessageShown = false;
       setNextRefreshBalanceAndPayments(true);
     }
@@ -80,10 +80,10 @@ void loop_interrupts() {
       // handle long press
       Serial.println("Handling long button press");
       if (piggyMode != PIGGYMODE_STARTING_AP && piggyMode != PIGGYMODE_STARTED_AP) {
-        displayFit("User button was pushed for more than 3s, starting Access Point configuration mode!", 0, 0, displayWidth(), displayHeight(), MAX_FONT);
+        displayFit("Config ligando em 3s...", 0, 0, displayWidth(), displayHeight(), MAX_FONT);
         piggyMode = PIGGYMODE_STARTING_AP;
       } else {
-        displayFit("User button was pushed while already in configuration mode, going back to station mode!", 0, 0, displayWidth(), displayHeight(), MAX_FONT);
+        displayFit("Config desligando...", 0, 0, displayWidth(), displayHeight(), MAX_FONT);
         piggyMode = PIGGYMODE_STARTING_STA;
       }
     }

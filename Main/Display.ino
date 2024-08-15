@@ -281,7 +281,7 @@ void displayBalance(int currentBalance) {
   setPartialWindow(0, 0, xBeforeLNURLp, startPaymentsHeight);
   displayFirstPage();
   do {
-    displayFit(currentBalance == NOT_SPECIFIED ? "Unknown Balance" : formatIntWithSeparator(currentBalance) + " sats", 
+    displayFit(currentBalance == NOT_SPECIFIED ? "Saldo desconhecido" : formatIntWithSeparator(currentBalance) + " sats", 
                0, 0, xBeforeLNURLp - marginFromQRcode, balanceHeight - 1 + marginBelowBalance, 5, false, false, false);
     displayFillRect(0, balanceHeight + marginBelowBalance, xBeforeLNURLp - marginFromQRcode, 1, GxEPD_BLACK);
     displayFillRect(xBeforeLNURLp - marginFromQRcode, 0, marginFromQRcode, startPaymentsHeight, GxEPD_WHITE);
@@ -315,11 +315,11 @@ void displayStatus(bool showsleep) {
   do {
     int startY = qrPixels;
     double voltage = showsleep ? getBatteryVoltage() : getLastVoltage();
-    if (voltage > 0) startY += drawLine("Batt:" + String(batteryVoltageToPercent(voltage)) + "%", displayWidth(), startY, false, true);
-    String wifiString = showsleep ? "..zzZZZ" : "Wifi:" + (wifiConnected() ? String(strengthPercent(getStrength(5))) + "%" : "off");
+    if (voltage > 0) startY += drawLine("Bat:" + String(batteryVoltageToPercent(voltage)) + "%", displayWidth(), startY, false, true);
+    String wifiString = showsleep ? "..zzZZZ" : "Wifi:" + (wifiConnected() ? String(strengthPercent(getStrength(5))) + "%" : "desl.");
     Serial.println("Displaying wifi string: " + wifiString);
     startY += drawLine(wifiString, displayWidth(), startY, false, true);
-    String versionString = "v" + getShortVersion() + (isUpdateAvailable() ? " UPD!" : "");
+    String versionString = "v" + getShortVersion() + (isUpdateAvailable() ? " ATU!" : "");
     startY += drawLine(versionString, displayWidth(), startY, false, true);
     drawLine(getTimeFromNTP(), displayWidth(), startY, false, true);
   } while (displayNextPage());
@@ -328,7 +328,7 @@ void displayStatus(bool showsleep) {
 bool displayVoltageWarning() {
   double voltage = getBatteryVoltage();
   if (voltage > 0 && voltage < 3.8) {
-    displayFit(" ! LOW BATTERY (" + String(voltage) + "V) ! ", 0, displayHeight() - 30, displayWidth(), displayHeight() - 12, 2, true);
+    displayFit(" ! BATERIA BAIXA (" + String(voltage) + "V) ! ", 0, displayHeight() - 30, displayWidth(), displayHeight() - 12, 2, true);
     waitForSloganReadUntil = millis() + 5000;
     return true;
   }
