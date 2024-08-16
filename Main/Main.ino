@@ -26,55 +26,58 @@
 
 #define roundEight(x) (((x) + 8 - 1) & -8) // round up to multiple of 8
 
-long lastUpdatedBalance = -UPDATE_BALANCE_PERIOD_MILLIS;  // this makes it update when first run
+long lastUpdatedBalance = -UPDATE_BALANCE_PERIOD_MILLIS; // this makes it update when first run
 int lastBalance = -NOT_SPECIFIED;
 bool alreadyTriedFindingWalletIDinLNURLpList = false;
 bool forceRefreshBalanceAndPayments = false;
 int xBeforeLNURLp;
 
-void setup() {
-    Serial.begin(115200);
-    Serial.println("Starting Lightning Piggy " + getFullVersion());
+void setup()
+{
+  Serial.begin(115200);
+  Serial.println("Starting Lightning Piggy " + getFullVersion());
 
-    // turn on the green LED-IO12 on the LilyGo 2.66 inch, to show the board is on
-    // it will turn off when the board hibernates
-    pinMode(12, OUTPUT);
-    digitalWrite(12, HIGH);   // turn the LED on (HIGH is the voltage level)
+  // turn on the green LED-IO12 on the LilyGo 2.66 inch, to show the board is on
+  // it will turn off when the board hibernates
+  pinMode(12, OUTPUT);
+  digitalWrite(12, HIGH); // turn the LED on (HIGH is the voltage level)
 
-    print_reset_reasons();
-    print_wakeup_reason();
+  print_reset_reasons();
+  print_wakeup_reason();
 
-    setup_watchdog(); // do this as soon as possible, to workaround potential hangs, but not before turing on the power LED and printing debug info
+  setup_watchdog(); // do this as soon as possible, to workaround potential hangs, but not before turing on the power LED and printing debug info
 
-    setup_display();
-    displayVoltageWarning();
-    showBootSlogan();
-    showLogo(epd_bitmap_Lightning_Piggy, 104, 250, displayHeight() - 104, (displayWidth() - 250) / 2); // width and height are swapped because display rotation
+  setup_display();
+  displayVoltageWarning();
+  showBootSlogan();
+  showLogo(epd_bitmap_Lightning_Piggy, 104, 250, displayHeight() - 104, (displayWidth() - 250) / 2); // width and height are swapped because display rotation
 
-    displayWifiConnecting();
-    #ifndef DEBUG
-    connectWifi();
-    short_watchdog_timeout(); // after the long wifi connection stage, the next operations shouldn't take long
-    displayWifiStrengthBottom();
-    #endif
-    displayFetching();
+  displayWifiConnecting();
+#ifndef DEBUG
+  setupWifiCallback();
+  short_watchdog_timeout(); // after the long wifi connection stage, the next operations shouldn't take long
+  displayWifiStrengthBottom();
+#endif
+  displayFetching();
 
-    watchdogWasntTriggered();
+  watchdogWasntTriggered();
 
-    setup_interrupts(); // interrupts only make sense right before the loop
+  setup_interrupts(); // interrupts only make sense right before the loop
 }
 
-void loop() {
+void loop()
+{
   loop_interrupts();
 
   // If there is no balance OR it has been a long time since it was refreshed, then refresh it
-  if (lastBalance == -NOT_SPECIFIED || (millis() - lastUpdatedBalance) > UPDATE_BALANCE_PERIOD_MILLIS || forceRefreshBalanceAndPayments) {
+  if (lastBalance == -NOT_SPECIFIED || (millis() - lastUpdatedBalance) > UPDATE_BALANCE_PERIOD_MILLIS || forceRefreshBalanceAndPayments)
+  {
     lastUpdatedBalance = millis();
     disconnectWebsocket();
 
     xBeforeLNURLp = showLNURLpQR(getLNURLp());
-    xBeforeLNURLp = displayWidth()-roundEight(displayWidth()-xBeforeLNURLp);
-    displayStatus(xBeforeLNURLp, false);  // takes ~2000ms, which is too much to do with the websocket
+    xBeforeLNURLp = displayWidth() - roundEight(displayWidth() - xBeforeLNURLp);
+    displayStatus(xBeforeLNURLp, false); // takes ~2000ms, which is too much to do with the websocket
     displayBalanceAndPayments(xBeforeLNURLp, forceRefreshBalanceAndPayments);
     forceRefreshBalanceAndPayments = false;
 
@@ -85,18 +88,22 @@ void loop() {
   // The wallet ID (needed for the websocket) is configured statically or is found in the incoming payments.
   // But if not, because there were no incoming payments, then fetch it from lnurlp/list.
   // Only attempt to do this once, to avoid becoming very slow here
-  if (getWalletID().length() == 0 && !alreadyTriedFindingWalletIDinLNURLpList) {
+  if (getWalletID().length() == 0 && !alreadyTriedFindingWalletIDinLNURLpList)
+  {
     Serial.println("No wallet ID was configured or found in incoming payments, fetching it from the LNURLp list...");
     alreadyTriedFindingWalletIDinLNURLpList = true;
     getLNURLp(true);
     connectWebsocket(); // slow operation so make sure websocket is connected
   }
-  if (getWalletID().length() > 0) websocket_loop();
+  if (getWalletID().length() > 0)
+    websocketLoop();
 
   feed_watchdog(); // Feed the watchdog regularly, otherwise it will "bark" (= reboot the device)
-  if (!hibernateDependingOnBattery()) delay(200);
+  if (!hibernateDependingOnBattery())
+    delay(200);
 }
 
-void nextRefreshBalanceAndPayments() {
+void nextRefreshBalanceAndPayments()
+{
   forceRefreshBalanceAndPayments = true;
 }
