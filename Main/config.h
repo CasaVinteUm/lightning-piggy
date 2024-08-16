@@ -19,11 +19,7 @@
 //    - if the user hasn't provided a wallet ID:
 //        - the wallet ID is taken from incoming payments, if any are found
 //        - if there are no incoming payments, then the wallet ID is fetched using lnurlp/api/v1/links
-const char* ssid     = "REPLACETHISBYWIFISSID_REPLACETHISBYWIFISSID_REPLACETHISBYWIFISSID"; // wifi SSID here
-const char* password = "REPLACETHISBYWIFIKEY_REPLACETHISBYWIFIKEY_REPLACETHISBYWIFIKEY"; // wifi password here
-const char* lnbitsHost = "REPLACETHISBYLNBITSHOST_REPLACETHISBYLNBITSHOST_REPLACETHISBYLNBITSHOST"; // HOST NAME HERE E.G. legend.lnbits.com
-const char* lnbitsPort = "REPLACETHISBYLNBITSPORT_REPLACETHISBYLNBITSPORT_REPLACETHISBYLNBITSPORT"; // PORT NUMBER HERE E.G. 443
-const char* invoiceKey = "REPLACETHISBYLNBITSKEY_REPLACETHISBYLNBITSKEY_REPLACETHISBYLNBITSKEY"; // lnbits wallet invoice hey here
+// wifi will now be setup via wifimanager
 
 // OPTIONAL:
 // =========
