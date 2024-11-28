@@ -1,4 +1,7 @@
-# Lightning Piggy
+# Lightning Piggy — SatsConf 2024
+
+> Um cofrinho Bitcoin Lightning que utiliza LNBits (ou Nostr Wallet Connect), funcionando em um hardware especial com tela ePaper.
+> Esta é uma edição especial do projeto [Lightning Piggy](https://lightningpiggy.com/), preparada para a Área Kids da [SatsConf 2024](https://satsconf.com.br/) — toda a interface em português.
 
 [![License: LGPL-2.1](https://img.shields.io/github/license/LightningPiggy/lightning-piggy)](https://github.com/LightningPiggy/lightning-piggy/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/LightningPiggy/lightning-piggy)](https://github.com/LightningPiggy/lightning-piggy/releases)
@@ -7,142 +10,63 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/LightningPiggy/lightning-piggy)](https://github.com/LightningPiggy/lightning-piggy/commits/master)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/LightningPiggy/lightning-piggy)
 
-Bitcoin Lightning piggybank using LNBits (for LNURLp) running on TTGO LilyGo ePaper hardware with ESP32 microcontroller.
+### Requisitos
+Para configurar seu cofrinho Lightning, você precisará:
 
-See https://www.lightningpiggy.com/ and https://makers.bolt.fun/project/lightningpiggy
+- Um porquinho (Lightning Piggy) [montado](./HARDWARE.md) e [gravado (flashed)](./FLASHING.md) com esta versão de SatsConf 2024
+- Uma conta em uma instância do LNBits (para **testes** você pode usar https://lnbits.casa21.space/ - mas lembre-se que LNBits é custodial, então os sats não estão sob seu controle)
+- Extensão do LNBits "Pay Links" ativada, com um "Pay Link" criado
+- _Opcional_: uma URL NWC (Nostr Wallet Connect) caso prefira receber por NWC em vez de LNBits
 
-Main Source code
-===========
+No LNBits (extensão "Pay Links"):
 
-The source code in Main/Main.ino works on both the TTGO LilyGo T5 ePaper 2.13 inch DEPG0213BN display and the (discontinued and more expensive) TTGO LilyGo T5 ePaper 2.66 inch DEPG0266BN display boards.
+- Clique em "New Pay Link"
+- Desmarque "fixed amount"
+- Valor mínimo `1`, máximo `100000000`, moeda "satoshis"
+- Em "Advanced options": "Comment maximum characters" = `128`
+- _Opcional_: "Success message" em português, ex.: "Obrigado por enviar sats para meu cofrinho!"
 
-**With Arduino IDE**
+### Como configurar o porquinho
 
-- Arduino IDE version 2.3.5
-- ESP32 Board Support version 3.2
-- Preferences -> Compiler warnings: Default
-- Tools -> Board -> ESP32 Arduino -> ESP32 Dev Module
+1. Ligue o porquinho: ele cria a rede WiFi `Piggy Config` (modo configuração abre automaticamente quando não há WiFi salvo; para entrar nele depois, mantenha apertado o botão traseiro por 3 segundos).
+2. No celular, conecte-se ao WiFi `Piggy Config` (o portal abre sozinho; se não abrir, navegue até http://192.168.4.1)
+3. Faça login com o usuário `piggy` e senha `oinkoink`
+4. Preencha:
+   - Rede WiFi e senha
+   - Em "Conexão da carteira": o `Endereço Lightning ou código LNURL-pay` da sua conta (ou a NWC URL), e os dados do servidor LNBits (domínio, porta HTTPS `443` e a `Chave de fatura/leitura`)
+5. Toque em `Salvar` e depois `Reiniciar`
 
-Where: 
+O porquinho já vem com padrões brasileiros prontos (idioma Português, fuso America/Sao_Paulo, moeda BRL, modo de suspensão "infinito") aplicados aos campos deixados em branco.
 
-- Tools -> Upload Speed: 921600
-- Tools -> CPU Frequency: 240Mhz
-- Tools -> Flash Frequency: 80Mhz
-- Tools -> Flash Mode: DIO (seems needed for the QEMU emulator)
-- Tools -> Flash Size: 4MB (32Mb)
-- Tools -> Partition Scheme: Custom (uses Main/partitions.csv)
-- Tools -> Core Debug Level: Warn
-- Tools -> PSRAM: Disabled
-- Tools -> Port: /dev/ttyACM0
+Após conectar, o porquinho mostra o QR para pagamento e cada pix que chegar (sat) aparece na tela.
 
-Make sure the Arduino IDE has permissions to access the serial port:
+### Diferenças desta edição (fork SatsConf 2024)
 
-`sudo chmod -f 777 /dev/ttyACM* /dev/ttyUSB*`
+- Versão `6.4.0-sc24` (sufixo marca a edição da SatsConf e evita falsos avisos de atualização em relação ao upstream)
+- Todo o conteúdo na tela e no portal de configuração em português
+- Padrões pt-BR (Português / America/Sao_Paulo / BRL) aplicados automaticamente
+- Modo de suspensão infinita por padrão (acorda pelo botão ou sensor de inclinação)
+- Ferramentas de compilação oficiais dentro de Docker (`Containerfile` + `./docker-build.sh`), inclusive gerando o portal e o fuso horário
+- NWC: usa o `lightning:` e o Lightning Address do URL NWC como código de recebimento
 
-**OR with Arduino CLI**
+### Compilando este fork
 
-- Arduino CLI version 1.1.1-arch commit: fa6eafcbbea391eee
-- LNBits v0.12.12 (tested with lnd version 0.18.99-beta and bitcoind 27.0.0)
-- Debian Bookworm
-
-Commands:
-
-```
-arduino-cli compile -u -v -t --libraries Main/libraries/ --fqbn esp32:esp32:esp32:PartitionScheme=custom,FlashMode=dio -p /dev/ttyACM0 Main/
-```
-
-**On the lnbits webpage:**
-
-- activate the LNURLp extension
-- click on the LNURLp extension
-- click "NEW PAY LINK"
-- untick "fixed amount"
-- set minimum amount: 1
-- set maximum amount: 100000000
-- set currency to "satoshis"
-- click "Advanced options"
-- set "Comment maximum characters" to 128
-- set "Webhook URL" to https://p.lightningpiggy.com/ (optional, for anonymous usage metrics)
-- set a "Success message", like: Thanks for sending sats to my piggy
-
-**Known issues:**
-- There's an issue with the 2.13 inch GDEM0213B74 display, somehow the display becomes blank after updateWindow() calls. But we use the DEPG display, which is not affected.
-
-How to install
-==============
-
-To install Lightning Piggy from the code base (rather than just using the latest release and using the web installer at https://lightningpiggy.github.io):
-
-- Connect the device via USB
-- Open /Main/Main.ino using Arduino Studio.
-- Update values in config.h
-- Copy the libraries used from C:\...\lightning-piggy\Main\libraries\ to your Arduino libraries folder (usually C:\Users\YourUsername\Documents\Arduino\libraries).
-- Upload using Sketch > Upload.
-
-To install the temporary Lightning Piggy Splash (used for shipping):
-
-- Connect the device via USB
-- Open /Splash/Splash.ino using Arduino Studio.
-- Upload using Sketch > Upload.
-
-How to release
-==============
-
-To make a new release available on the web installer:
-
-- Update the version number in Constants.h
-- Update CHANGELOG.md
-- Make sure there are no uncommitted development changes (git diff; git diff --staged)
-- Build and export the binaries with Arduino CLI (esp32 core 3.2.0, custom 4MB partition scheme, DIO flash mode — same settings as the build instructions above):
+Não é preciso instalar o Arduino no computador — tudo acontece dentro de Docker:
 
 ```
-arduino-cli compile --libraries Main/libraries/ \
-  --fqbn esp32:esp32:esp32:PartitionScheme=custom,FlashMode=dio \
-  --export-binaries Main/
+./docker-build.sh
 ```
 
-  This writes the binaries to `Main/build/esp32.esp32.esp32/`: `Main.ino.bin` (the app), `Main.ino.bootloader.bin`, `Main.ino.partitions.bin`, `Main.ino.merged.bin` (full 4MB flash image), plus `Main.ino.elf` and `Main.ino.map` (kept per-release for decoding crash backtraces with `addr2line`).
+Os binários ficam em `Main/build/esp32.esp32.esp32/` (inclui `Main.ino.merged.bin` completo para gravação em um clique). Para uma sessão interativa com a toolchain montada: `./docker-build.sh shell`.
 
-- Copy the build output into the web installer repo. `boot_app0.bin` is not produced by the build — it ships with the esp32 core (on Linux under `~/.arduino15/`, on macOS under `~/Library/Arduino15/`):
+## Agradecimentos
 
-```
-DST=~/sources/lightningpiggy.github.io/firmware/ttgo_lilygo_2.13_and_2.66_inch_epaper_6.x
-CORE=~/.arduino15/packages/esp32/hardware/esp32/3.2.0
-cp Main/build/esp32.esp32.esp32/Main.ino.bin            "$DST/"
-cp Main/build/esp32.esp32.esp32/Main.ino.bootloader.bin "$DST/"
-cp Main/build/esp32.esp32.esp32/Main.ino.partitions.bin "$DST/"
-cp Main/build/esp32.esp32.esp32/Main.ino.merged.bin     "$DST/"
-cp Main/build/esp32.esp32.esp32/Main.ino.elf            "$DST/"
-cp Main/build/esp32.esp32.esp32/Main.ino.map            "$DST/"
-cp "$CORE/tools/partitions/boot_app0.bin"               "$DST/"
-```
+- [LNBits](https://lnbits.com/) por fornecer o serviço de pagamento Lightning
+- [Casa21 & VinteUm](https://vinteum.org/) por fornecer a instancia do LNBits para demonstração na [SatsConf 2024](https://satsconf.com.br/), hardware para demonstração com as crianças e aos hackers de lá que ajudaram na reta final da modificação do projeto para a lingua portuguesa
+- [Lightning Piggy](https://lightningpiggy.com/) por fornecer o código base desse fork
 
-- Check that the `boot_app0.bin` in the web installer repo matches the one shipped with the esp32 core:
+---
 
-```
-md5sum "$CORE/tools/partitions/boot_app0.bin" "$DST/boot_app0.bin"
-```
+## Para quem é técnico
 
-- Sanity-check that the partition table did not change between releases. It must stay byte-identical so that web-installs and OTA updates keep the existing `spiffs`/config partition at 0x390000 intact (a changed layout could brick configured devices):
-
-```
-git -C ~/sources/lightningpiggy.github.io diff --stat -- "$DST/Main.ino.partitions.bin"
-# (no output = unchanged = good)
-```
-
-- Update the version number in `~/sources/lightningpiggy.github.io/manifests/manifest_ttgo_lilygo_2.13_and_2.66_inch_epaper_6.x.json`
-- Commit and push the web installer repo. This is served via GitHub Pages, so pushing to `master` publishes the new firmware to the web installer (and to OTA) immediately:
-
-```
-pushd ~/sources/lightningpiggy.github.io/ ; git commit -a ; git push ; popd
-```
-
-- Tag the release on the lightning-piggy repo so it shows up under Releases (marked latest):
-
-```
-gh release create vX.Y.Z --target master --title "vX.Y.Z" --notes-file <changelog-notes> --latest
-```
-
-ESP32 emulation with QEMU (including WiFi!)
-===================
-See [these detailed instructions on ESP32 emulation with QEMU, including WiFi](Emulation.md).
+O firmware compila integralmente dentro de Docker (Arduino CLI 1.1.1 + esp32 core 3.2.0), e o portal de configuração e o fuso horário são gerados automaticamente no build. Detalhes técnicos, arquitetura e screenshots ficam no [AGENTS.md](AGENTS.md). Para os corajosos, há também [emulação com QEMU (incluindo WiFi!)](Emulation.md).
