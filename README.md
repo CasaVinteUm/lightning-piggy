@@ -3,13 +3,13 @@
 
 Essa é uma versão comemorativa do projeto Lightning Piggy, que foi criado especialmente para a Área Kids da [SatsConf 2024](https://satsconf.com.br/). Para mais informações sobre o projeto original, visite https://lightningpiggy.com/
 
-### Como configurar seu Lightning Piggy
+### Requisitos e configuração do LNBits
 Para configurar seu cofrinho Lightning, você precisará:
 
 - Uma instancia do LNBits (para **testes** você pode usar https://lnbits.casa21.space/ - mas lembre-se que LNBits é custodial, então os sats aqui não estão sob seu controle)
 - Uma conta na sua instancia do LNBits
 - Extensão do LNBits "Pay Links"
-- Um porquinho (Lightning Piggy) [montado](./HARDWARE.md) e [configurado](./FLASHING.md)
+- Um porquinho (Lightning Piggy) [montado](./HARDWARE.md) e [gravado (flashed)](./FLASHING.md)
 
 Na página da sua conta no LNBits:
 
@@ -25,6 +25,22 @@ Na página da sua conta no LNBits:
 - _Opcional_: Definir "Webhook URL" para https://p.lightningpiggy.com/ (para métricas de uso anônimas)
 - _Opcional_: Definir uma "Success message", como por exemplo: "Obrigado por enviar sats para meu cofrinho!"
 
+Após isso, você deverá começar a configurar os parâmetros do seu cofrinho Lightning.
+
+### Como configurar seu Lightning Piggy
+
+- Ao ligar pela primeira vez, o Lightning Piggy irá criar uma rede WiFi com o nome `LN Piggy`
+- Conecte-se à rede WiFi `LN Piggy` e navegue até o endereço IP do seu cofrinho Lightning (geralmente, http://192.168.4.1)
+- Clique em "Configure WiFi"
+- Procure o nome da sua rede WiFi
+- Digite a senha da sua rede WiFi
+- Defina o paramêtro "LNBits Host" com o endereço http(s) do seu LNBits
+- Defina o paramêtro "LNBits Port" com o número da porta do seu LNBits (443 para https, 80 para http)
+- Defina o paramêtro "Invoice Key" com a chave de acesso do seu LNBits (encontrada na página principal da sua carteira no LNBits, na seção "API Keys")
+- Salve as configurações
+
+Após isso, o Lightning Piggy deverá se conectar automaticamente à sua rede WiFi e mostrar o QRCODE para pagamento.
+Pagamentos vão aparecendo na tela do porquinho de tempos em tempos.
 
 ## Agradecimentos
 
