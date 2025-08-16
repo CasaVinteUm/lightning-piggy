@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <!--
@@ -11,7 +11,7 @@
 
   <!-- For production, we compiled Tailwind CSS locally instead of using the CDN -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lightning Piggy Configuration</title>
+  <title>Configuração do Lightning Piggy</title>
 
   <!-- Offline Tailwind CSS -->
   <link rel="stylesheet" href="tailwind_output.css">
@@ -30,7 +30,7 @@
       />
 -->
       <h1 class="text-3xl font-bold text-center" style="color: var(--primary);">
-        Lightning Piggy Configuration
+        Configuração do Lightning Piggy
       </h1>
 <!--
       <p class="mt-2 text-center text-gray-700">
@@ -79,7 +79,7 @@
           id="saveSpinner"
           class="hidden inline-block animate-spin h-5 w-5 mr-2 border-2 border-t-transparent border-white rounded-full"
         ></span>
-        Save
+        Salvar
       </button>
     </div>
 
@@ -89,7 +89,7 @@
         type="submit"
         id="restartButton"
         class="restart-btn w-auto text-lg font-bold px-6 py-3 rounded shadow-lg transition-all transform hover:scale-105" >
-        Restart
+        Reiniciar
       </button>
     </div>
   </div>
@@ -100,25 +100,25 @@
   <script>
     // --- UI Metadata Arrays ---
     const config_strings = [
-      ["config_wifi_ssid_1", "Wireless Network Name", "The SSID or 'name' of the wifi to connect to."],
-      ["config_wifi_password_1", "Wireless Network Password", "The wifi key or 'password' to connect. Leave empty if it's an open wifi."],
-      ["config_lnbits_host", "LNBits Server Domain Name (without https://)", "The server on which you've created an LNBits wallet. Example: demo.lnpiggy.com or your own server's domain name. DO NOT put https:// - only the domain name!"],
-      ["config_lnbits_https_port", "LNBits HTTPS Port", "If LNBits is not on the default port 443, specify here."],
-      ["config_lnbits_invoice_key", "LNBits Invoice/Read Key", "Copy-paste the invoice/read key from your LNBits wallet."],
-      ["config_static_receive_code", "Lightning Address or LNURL-pay code (to receive sats)", "Like oink@demo.lnpiggy.com or LNURL1... from the LNBits 'Pay Links' extension."],
-      ["config_fiat_currency", "Fiat Currency", "Example: USD, EUR, DKK, etc. Leave empty to hide fiat amounts."],
-      ["config_balance_bias", "Balance Bias", "Satoshis to add (or subtract if negative) to adjust your balance."],
-      ["config_thousands_separator", "Thousands Separator", "Example: . or , or a space. Leave empty to use locale default."],
-      ["config_decimal_separator", "Decimal Separator", "Example: . or , or a space. Leave empty to use locale default."],
-      ["config_show_boot_wisdom", "Show Boot Wisdom", "Set to YES to display a quote at startup instead of the logo."],
-      ["config_boot_salutation", "Boot Salutation", "Greeting at startup. Example: 'Some wisdom from your favorite uncle:'."],
-      ["config_locale", "Language (Locale)", "Language to use for boot wisdom etc."],
-      ["config_time_zone", "Timezone", "Used for showing the time of the last update before going to sleep. Example: America/New_York, Africa/Johannesburg, Europe/Copenhagen."],
-      ["config_sleep_mode", "Sleep Mode", "Whether the device should sleep to conserve battery."],
-      ["config_custom_sleep_minutes", "Custom Sleep Duration Minutes", "Duration of the sleep, in minutes. Only applicable if 'custom_sleep' mode is enabled."],
-      ["config_always_run_webserver", "Always Run Webserver", "Whether to run the webserver in wifi client ('station') mode too (YES/NO)."],
-      ["config_update_host", "Update Server", "Server to check for updates. Defaults to m.lightningpiggy.com"],
-      ["config_nwc_url", "Nostr Wallet Connect String", "NWC URL like: nostr+walletconnect://69effe...60d9?relay=wss://relay.getalby.com/v1&secret=be42...c007" ]
+      ["config_wifi_ssid_1", "Nome da rede WiFi", "O SSID ou 'nome' da rede WiFi para conectar."],
+      ["config_wifi_password_1", "Senha da rede WiFi", "A senha do WiFi para conectar. Deixe vazio se for uma rede aberta."],
+      ["config_lnbits_host", "Domínio do servidor LNBits (sem https://)", "O servidor onde você criou uma carteira LNBits. Exemplo: demo.lnpiggy.com ou o domínio do seu próprio servidor. NÃO coloque https:// - apenas o nome do domínio!"],
+      ["config_lnbits_https_port", "Porta HTTPS do LNBits", "Se o LNBits não estiver na porta padrão 443, especifique aqui."],
+      ["config_lnbits_invoice_key", "Chave de fatura/leitura do LNBits", "Copie e cole a chave de fatura/leitura da sua carteira LNBits."],
+      ["config_static_receive_code", "Endereço Lightning ou código LNURL-pay (para receber sats)", "Como oink@demo.lnpiggy.com ou LNURL1... da extensão 'Pay Links' do LNBits."],
+      ["config_fiat_currency", "Moeda fiduciária", "Exemplo: USD, EUR, BRL, etc. Deixe vazio para ocultar valores em moeda fiduciária."],
+      ["config_balance_bias", "Ajuste de saldo", "Sats a adicionar (ou subtrair se negativo) para ajustar seu saldo."],
+      ["config_thousands_separator", "Separador de milhar", "Exemplo: . ou , ou um espaço. Deixe vazio para usar o padrão do idioma."],
+      ["config_decimal_separator", "Separador decimal", "Exemplo: . ou , ou um espaço. Deixe vazio para usar o padrão do idioma."],
+      ["config_show_boot_wisdom", "Mostrar frase ao iniciar", "Defina como SIM para exibir uma frase ao iniciar em vez do logo."],
+      ["config_boot_salutation", "Saudação inicial", "Saudação exibida ao iniciar. Exemplo: 'Alguma sabedoria do seu tio favorito:'."],
+      ["config_locale", "Idioma (Locale)", "Idioma usado nas frases iniciais etc."],
+      ["config_time_zone", "Fuso horário", "Usado para mostrar a hora da última atualização antes de dormir. Exemplo: America/Sao_Paulo, Africa/Johannesburg, Europe/Copenhagen."],
+      ["config_sleep_mode", "Modo de suspensão", "Se o dispositivo deve dormir para poupar bateria."],
+      ["config_custom_sleep_minutes", "Duração personalizada da suspensão (minutos)", "Duração da suspensão, em minutos. Aplicável somente se o modo 'custom_sleep' estiver ativado."],
+      ["config_always_run_webserver", "Sempre executar o servidor web", "Executar o servidor web também no modo cliente WiFi ('station') (SIM/NÃO)."],
+      ["config_update_host", "Servidor de atualização", "Servidor para verificar atualizações. Padrão: m.lightningpiggy.com"],
+      ["config_nwc_url", "String Nostr Wallet Connect", "URL NWC como: nostr+walletconnect://69effe...60d9?relay=wss://relay.getalby.com/v1&secret=be42...c007"]
     ];
 
     // We want LNBits HTTPS Port & Balance Bias to be integers
@@ -130,36 +130,37 @@
 
     // Mapping categories to configuration names
     const config_categories = {
-      "Network Connection": ["config_wifi_ssid_1", "config_wifi_password_1"],
-      "Wallet Connection": ["config_static_receive_code", "config_nwc_url", "config_lnbits_host", "config_lnbits_invoice_key", "config_lnbits_https_port"],
-      "Display Settings": ["config_fiat_currency", "config_balance_bias", "config_thousands_separator", "config_decimal_separator", "config_show_boot_wisdom", "config_boot_salutation"],
-      "Device Configuration": ["config_locale", "config_time_zone", "config_sleep_mode", "config_custom_sleep_minutes"],
-      "Advanced Settings": ["config_always_run_webserver", "config_update_host"]
+      "Conexão de rede": ["config_wifi_ssid_1", "config_wifi_password_1"],
+      "Conexão da carteira": ["config_static_receive_code", "config_nwc_url", "config_lnbits_host", "config_lnbits_invoice_key", "config_lnbits_https_port"],
+      "Configurações de tela": ["config_fiat_currency", "config_balance_bias", "config_thousands_separator", "config_decimal_separator", "config_show_boot_wisdom", "config_boot_salutation"],
+      "Configuração do dispositivo": ["config_locale", "config_time_zone", "config_sleep_mode", "config_custom_sleep_minutes"],
+      "Configurações avançadas": ["config_always_run_webserver", "config_update_host"]
     };
 
     // Allowed locales mapping for dropdown (code: full name)
     const allowed_locales = {
-      "en": "English",
-      "da": "Danish",
-      "de": "German",
-      "de_CH": "Swiss German",
-      "es": "Spanish",
-      "nl": "Dutch"
+      "en": "Inglês",
+      "da": "Dinamarquês",
+      "de": "Alemão",
+      "de_CH": "Alemão suíço",
+      "es": "Espanhol",
+      "nl": "Holandês",
+      "pt": "Português"
     };
 
     const allowed_sleep_modes = {
-      "custom_sleep": "Fixed sleep duration of 6 hours, or provide sleep duration below",
-      "no_sleep": "Don't sleep - ideal for mains power or solar setup with battery backup",
-      "endless_sleep": "Endless sleep - wake up when action button or tilt sensor is triggered"
+      "custom_sleep": "Suspensão fixa de 6 horas, ou informe a duração abaixo",
+      "no_sleep": "Não dormir - ideal para fonte de energia ou sistema solar com bateria de reserva",
+      "endless_sleep": "Suspensão infinita - acorda quando o botão de ação ou o sensor de inclinação for acionado"
     };
 
     // Font Awesome icons for each category
     const categoryIcons = {
-      "Network Connection": `<span class="wifi-icon w-6 h-6 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="wifi-svg"><path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z"/></svg></span>`,
-      "Wallet Connection": `<span class="wallet-icon w-5 h-5 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L80 128c-8.8 0-16-7.2-16-16s7.2-16 16-16l368 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L64 32zM416 272a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></span>`,
-      "Display Settings": `<span class="desktop-icon w-5 h-5 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg></span>`,
-      "Device Configuration": `<span class="cog-icon w-5 h-5 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/></svg></span>`,
-      "Advanced Settings": `<span class="tools-icon w-5 h-5 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M78.6 5C69.1-2.4 55.6-1.5 47 7L7 47c-8.5 8.5-9.4 22-2.1 31.6l80 104c4.5 5.9 11.6 9.4 19 9.4l54.1 0 109 109c-14.7 29-10 65.4 14.3 89.6l112 112c12.5 12.5 32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3l-112-112c-24.2-24.2-60.6-29-89.6-14.3l-109-109 0-54.1c0-7.5-3.5-14.5-9.4-19L78.6 5zM19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L233.7 374.3c-7.8-20.9-9-43.6-3.6-65.1l-61.7-61.7L19.9 396.1zM512 144c0-10.5-1.1-20.7-3.2-30.5c-2.4-11.2-16.1-14.1-24.2-6l-63.9 63.9c-3 3-7.1 4.7-11.3 4.7L352 176c-8.8 0-16-7.2-16-16l0-57.4c0-4.2 1.7-8.3 4.7-11.3l63.9-63.9c8.1-8.1 5.2-21.8-6-24.2C388.7 1.1 378.5 0 368 0C288.5 0 224 64.5 224 144l0 .8 85.3 85.3c36-9.1 75.8 .5 104 28.7L429 274.5c49-23 83-72.8 83-130.5zM56 432a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg></span>`
+      "Conexão de rede": `<span class="wifi-icon w-6 h-6 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="wifi-svg"><path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z"/></svg></span>`,
+      "Conexão da carteira": `<span class="wallet-icon w-5 h-5 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-224c0-35.3-28.7-64-64-64L80 128c-8.8 0-16-7.2-16-16s7.2-16 16-16l368 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L64 32zM416 272a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></span>`,
+      "Configurações de tela": `<span class="desktop-icon w-5 h-5 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg></span>`,
+      "Configuração do dispositivo": `<span class="cog-icon w-5 h-5 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/></svg></span>`,
+      "Configurações avançadas": `<span class="tools-icon w-5 h-5 text-white fill-current"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M78.6 5C69.1-2.4 55.6-1.5 47 7L7 47c-8.5 8.5-9.4 22-2.1 31.6l80 104c4.5 5.9 11.6 9.4 19 9.4l54.1 0 109 109c-14.7 29-10 65.4 14.3 89.6l112 112c12.5 12.5 32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3l-112-112c-24.2-24.2-60.6-29-89.6-14.3l-109-109 0-54.1c0-7.5-3.5-14.5-9.4-19L78.6 5zM19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L233.7 374.3c-7.8-20.9-9-43.6-3.6-65.1l-61.7-61.7L19.9 396.1zM512 144c0-10.5-1.1-20.7-3.2-30.5c-2.4-11.2-16.1-14.1-24.2-6l-63.9 63.9c-3 3-7.1 4.7-11.3 4.7L352 176c-8.8 0-16-7.2-16-16l0-57.4c0-4.2 1.7-8.3 4.7-11.3l63.9-63.9c8.1-8.1 5.2-21.8-6-24.2C388.7 1.1 378.5 0 368 0C288.5 0 224 64.5 224 144l0 .8 85.3 85.3c36-9.1 75.8 .5 104 28.7L429 274.5c49-23 83-72.8 83-130.5zM56 432a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg></span>`
     };
 
     // Build a lookup for labels and hints
@@ -174,7 +175,7 @@
       form.innerHTML = ""; // Clear any existing content
 
       // Which sections are open by default?
-      const openCategories = ["Network Connection", "Wallet Connection"];
+      const openCategories = ["Conexão de rede", "Conexão da carteira"];
 
       for (const [category, items] of Object.entries(config_categories)) {
         // Create a card for the category
@@ -244,14 +245,14 @@
           // YES/NO dropdown
           if (config_items_yes_no.includes(name)) {
             inputEl = document.createElement("select");
-            inputEl.innerHTML = `<option value="">Select...</option>
-                                 <option value="YES">YES</option>
-                                 <option value="NO">NO</option>`;
+            inputEl.innerHTML = `<option value="">Selecione...</option>
+                                 <option value="YES">SIM</option>
+                                 <option value="NO">NÃO</option>`;
           }
           // For locale, build a dropdown
           else if (name === "config_locale") {
             inputEl = document.createElement("select");
-            inputEl.innerHTML = `<option value="">Select language...</option>`;
+            inputEl.innerHTML = `<option value="">Selecione o idioma...</option>`;
             for (const [code, fullName] of Object.entries(allowed_locales)) {
               inputEl.innerHTML += `<option value="${code}">${fullName} (${code})</option>`;
             }
@@ -259,7 +260,7 @@
           // For sleep mode, build a dropdown
           else if (name === "config_sleep_mode") {
             inputEl = document.createElement("select");
-            inputEl.innerHTML = `<option value="">Select sleep mode...</option>`;
+            inputEl.innerHTML = `<option value="">Selecione o modo de suspensão...</option>`;
             for (const [code, fullName] of Object.entries(allowed_sleep_modes)) {
               inputEl.innerHTML += `<option value="${code}">${fullName} (${code})</option>`;
             }
@@ -267,7 +268,7 @@
           // For time zone, create a dropdown (populated later)
           else if (name === "config_time_zone") {
             inputEl = document.createElement("select");
-            inputEl.innerHTML = `<option value="">Select time zone...</option>`;
+            inputEl.innerHTML = `<option value="">Selecione o fuso horário...</option>`;
           }
           // For integer-only fields, use type="text"
           else if (config_items_integer.includes(name)) {
@@ -298,10 +299,10 @@
 
           section.appendChild(fieldDiv);
 
-          if (name == "config_nwc_url") { // After NWC, add the word "OR"
+          if (name == "config_nwc_url") { // Depois do NWC, adiciona a palavra "OU"
             const orDiv = document.createElement("div");
             orDiv.className = "text-3xl font-bold";
-            orDiv.innerHTML = "OR";
+            orDiv.innerHTML = "OU";
             section.appendChild(orDiv);
           }
         });
@@ -372,7 +373,7 @@
       // If mandatory, must not be empty
       if (config_items_mandatory.includes(name) && value === "") {
         valid = false;
-        errorMessage = "This field is mandatory.";
+        errorMessage = "Este campo é obrigatório.";
       }
 
       // If integer-only, check regex
@@ -380,7 +381,7 @@
         // Strict integer check (optional leading '-' + digits)
         if (!/^-?\d+$/.test(value)) {
           valid = false;
-          errorMessage = "Must be an integer.";
+          errorMessage = "Deve ser um número inteiro.";
         }
       }
 
@@ -388,7 +389,7 @@
       if (valid && config_items_yes_no.includes(name) && value !== "") {
         if (!["YES", "NO"].includes(value)) {
           valid = false;
-          errorMessage = "Must be YES or NO.";
+          errorMessage = "Deve ser SIM ou NÃO.";
         }
       }
 
@@ -396,7 +397,7 @@
       if (valid && name === "config_locale" && value !== "") {
         if (!Object.keys(allowed_locales).includes(value)) {
           valid = false;
-          errorMessage = "Invalid locale.";
+          errorMessage = "Idioma inválido.";
         }
       }
 
@@ -595,7 +596,7 @@
     function saveConfiguration() {
       // Final check
       if (!validateForm()) {
-        showToast("Some fields are invalid. Please correct and try again.", "validation_error");
+        showToast("Alguns campos estão inválidos. Corrija e tente novamente.", "validation_error");
         return;
       }
 
@@ -610,7 +611,7 @@
 
       const rawJson = JSON.stringify(configItems, null, 2); // raw text
 
-      showToast("Saving configuration...", "info");
+      showToast("Salvando configuração...", "info");
       const saveSpinner = document.getElementById("saveSpinner");
       saveSpinner.classList.remove("hidden");
       const saveBtn = document.getElementById("saveButton");
@@ -626,13 +627,13 @@
         // The server might return "Configuration file saved." or something similar
         saveSpinner.classList.add("hidden");
         saveBtn.disabled = false;
-        showToast("Configuration saved successfully!", "success");
+        showToast("Configuração salva com sucesso!", "success");
       })
       .catch((err) => {
         console.error("Error saving configuration:", err);
         saveSpinner.classList.add("hidden");
         saveBtn.disabled = false;
-        showToast("Failed to save configuration.", "upload_error");
+        showToast("Falha ao salvar a configuração.", "upload_error");
       });
     }
 
@@ -658,13 +659,13 @@
             if (!response.ok) {
                 throw new Error("Failed to restart");
             }
-            showToast("Restart request sent successfully, the device should restart soon!", "success");
+            showToast("Pedido de reinício enviado com sucesso, o dispositivo deve reiniciar em breve!", "success");
             */
         } catch (error) {
             console.error("Error:", error);
-            //showToast("Failed to send restart request.", "error");
+            //showToast("Falha ao enviar pedido de reinício.", "error");
         }
-        showToast("Restart request sent successfully, the device should restart soon!", "success");
+        showToast("Pedido de reinício enviado com sucesso, o dispositivo deve reiniciar em breve!", "success");
       });
 
     });
