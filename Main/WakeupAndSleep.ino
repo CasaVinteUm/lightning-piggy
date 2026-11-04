@@ -204,13 +204,15 @@ bool awakeLongEnough() {
 void hibernateDependingOnConfiguration() {
   if (!awakeLongEnough()) return;
 
-  int sleepSeconds = DEFAULT_SLEEP_DURATION_SECONDS;
+  // Kids receive the piggy in an open area; without configuration keep the
+  // piggy in endless sleep mode (woken by button/tilt) instead of 6h cycles.
+  int sleepSeconds = ENDLESS_SLEEP_SECONDS;
   if (isConfigured(sleepMode)) {
     String sleepModeString = String(sleepMode);
     if (sleepModeString == "no_sleep") {
       sleepSeconds = 0; // don't sleep
     } else if (sleepModeString == "endless_sleep") {
-      sleepSeconds = 60 * 60 * 24 * 365 * 5; // 5 years of sleep is basically forever
+      sleepSeconds = ENDLESS_SLEEP_SECONDS; // 5 years of sleep is basically forever
     } else if (sleepModeString == "custom_sleep") {
       int sleepMinutes = getConfigValueAsInt((char*)customSleepMinutes, DEFAULT_SLEEP_DURATION_SECONDS/60);
       sleepSeconds = sleepMinutes * 60;

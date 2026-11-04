@@ -72,6 +72,7 @@ extern const int SLEEP_HOURS_AFTER_MAX_WATCHDOG_REBOOTS = 6;
 #define WIFI_CONNECT_TIMEOUT_SECONDS 30         // after this time, it's deemed a failure
 
 #define DEFAULT_SLEEP_DURATION_SECONDS 60 * 60 * 6          // 6 hours = morning, afternoon, evening and night
+#define ENDLESS_SLEEP_SECONDS 60 * 60 * 24 * 365 * 5        // 5 years of sleep is basically forever
 
 #define PERIODIC_RESTART_MILLIS 1000 * 60 * 60 * 23    // restart every 23 hours to handle any long-duration issues such as out of memory
 
@@ -127,14 +128,15 @@ String loginURL = "/login";
 
 static const char login_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><title>Login</title></head>
 <body style="background-color: #F0BCD7; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
 <div style="background: white; border-radius: 0.75rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05); padding: 2rem; width: 300px; text-align: center;">
 <h2 style="color: #EC008C; margin-bottom: 1.5rem;">Login do Lightning Piggy</h2>
 <div id="error-message" style="color: #EC008C; margin-bottom: 1rem; display: none;">Credenciais inválidas, tente novamente.</div>
-<form action="/submit" method="POST">
-<input type="text" name="username" placeholder="Usuário" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; transition: all 0.3s ease;" onfocus="this.style.borderColor='#EC008C'; this.style.boxShadow='0 0 0 2px rgba(236, 0, 140, 0.2)';" onblur="this.style.borderColor='#ccc'; this.style.boxShadow='none';">
-<input type="password" name="password" placeholder="Senha" style="width: 100%; padding: 0.5rem; margin-bottom: 1.5rem; border: 1px solid #ccc; border-radius: 4px; transition: all 0.3s ease;" onfocus="this.style.borderColor='#EC008C'; this.style.boxShadow='0 0 0 2px rgba(236, 0, 140, 0.2)';" onblur="this.style.borderColor='#ccc'; this.style.boxShadow='none';">
+<form action="/submit" method="POST" autocapitalize="none" autocorrect="off" spellcheck="false">
+<input type="text" name="username" placeholder="Usuário" autocapitalize="none" autocorrect="off" spellcheck="false" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; transition: all 0.3s ease;" onfocus="this.style.borderColor='#EC008C'; this.style.boxShadow='0 0 0 2px rgba(236, 0, 140, 0.2)';" onblur="this.style.borderColor='#ccc'; this.style.boxShadow='none';">
+<input type="password" name="password" placeholder="Senha" autocapitalize="none" autocorrect="off" spellcheck="false" style="width: 100%; padding: 0.5rem; margin-bottom: 1.5rem; border: 1px solid #ccc; border-radius: 4px; transition: all 0.3s ease;" onfocus="this.style.borderColor='#EC008C'; this.style.boxShadow='0 0 0 2px rgba(236, 0, 140, 0.2)';" onblur="this.style.borderColor='#ccc'; this.style.boxShadow='none';">
 <input type="submit" value="Entrar" style="width: 100%; padding: 0.75rem; background-color: silver; color: black; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s, transform 0.3s;" onmouseover="this.style.backgroundColor='#EC008C'; this.style.color='white';" onmouseout="this.style.backgroundColor='silver'; this.style.color='black';">
 </form>
 <script>

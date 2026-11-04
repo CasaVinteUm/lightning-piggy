@@ -65,7 +65,7 @@
     </div>
 
     <!-- Form Container (built dynamically) -->
-    <form id="configForm" class="space-y-6 hidden" novalidate></form>
+    <form id="configForm" class="space-y-6 hidden" novalidate autocapitalize="none" autocorrect="off" spellcheck="false"></form>
 
     <!-- Save Button Container (with extra spacing) -->
     <div class="flex justify-center mt-8">
@@ -127,6 +127,18 @@
     const config_items_yes_no = [ "config_show_boot_wisdom", "config_always_run_webserver" ];
     // We want these to be mandatory
     const config_items_mandatory = [ "config_wifi_ssid_1" ];
+
+    // pt-BR defaults applied to empty fields at load:
+    // kids/parents receive the piggy in Brazil, so pick the Brazilian locale,
+    // timezone, fiat currency and separators instead of showing "Select..."
+    const config_defaults = {
+      "config_locale": "pt",
+      "config_time_zone": "America/Sao_Paulo",
+      "config_fiat_currency": "BRL",
+      "config_thousands_separator": ".",
+      "config_decimal_separator": ",",
+      "config_sleep_mode": "endless_sleep"
+    };
 
     // Mapping categories to configuration names
     const config_categories = {
@@ -285,6 +297,12 @@
           inputEl.id = name;
           inputEl.name = name;
           inputEl.placeholder = label;
+          // keep lowercase for WiFi/URLs on Android/iOS keyboards
+          if (inputEl.tagName !== "SELECT") {
+            inputEl.autocapitalize = "none";
+            inputEl.autocorrect = "off";
+            inputEl.spellcheck = false;
+          }
           inputEl.className =
             "mt-1 block w-full border-2 rounded-md shadow-sm p-2 focus:outline-none focus:border-[var(--primary)]";
           if (config_items_mandatory.includes(name)) {
@@ -566,7 +584,9 @@
           parsed.forEach((item) => {
             const field = document.getElementsByName(item.name)[0];
             if (field) {
-              field.value = (typeof item.value !== "undefined") ? item.value : "";
+              // apply pt-BR default when the stored value is empty
+              const defaultValue = config_defaults[item.name];
+              field.value = (typeof item.value !== "undefined" && item.value !== "") ? item.value : (defaultValue || "");
             }
           });
 
