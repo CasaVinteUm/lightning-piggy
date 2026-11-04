@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/refs/heads/main/schemas/devContainer.base.schema.json",
+  "name": "Lightning Piggy",
+  "image": "ghcr.io/casavinteum/lightning-piggy/devcontainer:master",
+  "workspaceFolder": "/work",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/work,type=bind,consistency=cached",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-arduino"
+      ]
+    }
+  },
+  "postCreateCommand": "git config --global --add safe.directory /work",
+  "properties": {
+    "description": "Toolchain for the Lightning Piggy ESP32 firmware (arduino-cli, esp32 core 3.2.0, esptool, mklittlefs)"
+  }
+}

@@ -1,0 +1,15 @@
+# Everything not needed by the Containerfile build context
+.git
+.github
+scripts
+timezones/*.h
+webconfig/*.h
+webconfig/index_inlined.html
+webconfig/tailwind_output.css
+webconfig/__pycache__
+build
+Main/build
+config_partition/config.json*
+*.bin
+*.log
+.DS_Store
