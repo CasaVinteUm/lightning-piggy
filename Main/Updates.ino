@@ -14,10 +14,15 @@ bool isUpdateAvailable() {
   if (newVersion != "") {
     Serial.println("newVersion is not empty, this is good");
     if (newVersion != currentVersion) {
-      Serial.println("newVersion != currentVersion, this is good");
-      return true;
-    } else {
-      Serial.println("newVersion == currentVersion, no update");
+      // Drop the fork suffix ("6.4.0-sc24.1") so a plain upstream "6.4.0" is not
+      // reported as a newer version for this SatsConf fork
+      String currentWithoutSuffix = currentVersion.substring(0, currentVersion.indexOf('-'));
+      String newWithoutSuffix = newVersion.substring(0, newVersion.indexOf('-'));
+      if (newWithoutSuffix != currentWithoutSuffix) {
+        Serial.println("newVersion != currentVersion, this is good");
+        return true;
+      }
+      Serial.println("newVersion == currentVersion (ignoring suffix), no update");
     }
   } else {
     Serial.println("newVersion is empty");
